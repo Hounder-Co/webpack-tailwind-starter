@@ -11,6 +11,7 @@ module.exports = {
   
   // https://webpack.js.org/concepts/output/
   output: {
+    publicPath: '',
     path: path.resolve(__dirname, 'dist'),
     filename: './dist.bundle.js'
   },
@@ -44,11 +45,12 @@ module.exports = {
           { 
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: [
-                require('tailwindcss'),
-                require('autoprefixer'),
-              ],
+              postcssOptions: {
+                plugins: [
+                  require('tailwindcss'),
+                  require('autoprefixer'),
+                ],
+              },
             }, 
           }
         ]
