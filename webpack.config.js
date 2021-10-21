@@ -13,7 +13,8 @@ module.exports = {
   output: {
     publicPath: '',
     path: path.resolve(__dirname, 'dist'),
-    filename: './dist.bundle.js'
+    filename: './dist.bundle.js',
+    assetModuleFilename: 'images/[hash][ext][query]'
   },
 
   // https://webpack.js.org/concepts/modules/
@@ -56,16 +57,10 @@ module.exports = {
         ]
       },
       {
-        // Apply rule for images
-        test: /\.(png|jpe?g|gif|svg)$/,
-        // Set loaders to transform files.
+        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+        // More information here https://webpack.js.org/guides/asset-modules/
+        type: 'asset/resource',
         use: [
-          {
-            loader: "file-loader",
-            options: {
-              outputPath: 'images'
-            }
-          },
           {
             loader: 'image-webpack-loader',
             options: {
@@ -73,34 +68,19 @@ module.exports = {
                 progressive: true,
                 quality: 65
               },
-              // optipng.enabled: false will disable optipng
               optipng: {
-                enabled: false,
+                enabled: false
               },
               pngquant: {
-                quality: '65-90',
+                quality: [0.65, 0.90],
                 speed: 4
               },
               gifsicle: {
-                interlaced: false,
+                interlaced: false
               },
-              // the webp option will enable WEBP
               webp: {
                 quality: 75
               }
-            }
-          }
-        ]
-      },
-      {
-        // Apply rule for fonts files
-        test: /\.(woff|woff2|ttf|otf|eot)$/,
-        // Set loaders to transform files.
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              outputPath: 'fonts'
             }
           }
         ]
